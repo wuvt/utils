@@ -31,7 +31,7 @@ if __name__ == "__main__":
                     meta = taglib.File(row.strip('\n')).tags
                     try:
                         #print(meta['TITLE'], meta['ARTIST'], meta['ALBUM'], meta['LABEL'])
-                        data.append({'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['LABEL'][0], 'file': convertpath(row) })
+                        data.append({'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['LABEL'][0], 'url': convertpath(row) })
                     except KeyError:
                         continue
                     except IndexError:
@@ -40,11 +40,11 @@ if __name__ == "__main__":
                     meta = taglib.File(row.strip('\n')).tags
                     try:
                         #print(meta['TITLE'], meta['ARTIST'], meta['ALBUM'], meta['LABEL'])
-                        data.append({'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['LABEL'][0], 'file': convertpath(row) })
+                        data.append({'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['LABEL'][0], 'url': convertpath(row) })
                     except KeyError:
                             try:
                                 #print(meta['TITLE'], meta['ARTIST'], meta['ALBUM'], meta['COMMENT'])
-                                data.append({'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['COMMENT'][0], 'file': convertpath(row) })
+                                data.append({'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['COMMENT'][0], 'url': convertpath(row) })
                             except KeyError:
                                 continue
                             except IndexError:
@@ -52,7 +52,7 @@ if __name__ == "__main__":
                     except IndexError:
                             try:
                                 #print(meta['TITLE'], meta['ARTIST'], meta['ALBUM'], meta['COMMENT'])
-                                data.append({'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['COMMENT'][0], 'file': convertpath(row) })
+                                data.append({'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['COMMENT'][0], 'url': convertpath(row) })
                             except KeyError:
                                 continue
                             except IndexError:

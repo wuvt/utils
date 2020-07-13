@@ -19,7 +19,6 @@ if __name__ == "__main__":
     data = []
     for path in ["/tank/automation", "/tank/library"]:
         findrun = subprocess.run(["find", path, "-type", "f"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        #findrun = subprocess.run(["find", path, "-type", "f"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True) # need text=True on py38
         output = io.BytesIO(findrun.stdout)
         for rowbyte in output:
             try:
@@ -27,24 +26,38 @@ if __name__ == "__main__":
             except:
                 continue
             try:
-                if row.endswith('flac\n'):
-                    meta = taglib.File(row.strip('\n')).tags
+                if row.endswith('flac\n') or row.endsiwth('ogg\n'):
+                    f = taglib.File(row.strip('\n'))
+                    meta = f.tags
                     try:
                         #print(meta['TITLE'], meta['ARTIST'], meta['ALBUM'], meta['LABEL'])
-                        data.append({'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['LABEL'][0], 'url': convertpath(row) })
+                        ndata = {'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['LABEL'][0], 'url': convertpath(row) }
+                        ndata['length'] = f.length
+                        ndata['bitrate'] = f.bitrate
+                        ndata['sample'] = f.sampleRate
+                        data.append(ndata)
                     except KeyError:
                         continue
                     except IndexError:
                         continue
-                elif row.endswith('mp3\n'):
-                    meta = taglib.File(row.strip('\n')).tags
+                elif row.endswith('mp3\n') or row.endswith('MP3\n'):
+                    f = taglib.File(row.strip('\n'))
+                    meta = f.tags
                     try:
                         #print(meta['TITLE'], meta['ARTIST'], meta['ALBUM'], meta['LABEL'])
-                        data.append({'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['LABEL'][0], 'url': convertpath(row) })
+                        ndata = {'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['LABEL'][0], 'url': convertpath(row) }
+                        ndata['length'] = f.length
+                        ndata['bitrate'] = f.bitrate
+                        ndata['sample'] = f.sampleRate
+                        data.append(ndata)
                     except KeyError:
                             try:
                                 #print(meta['TITLE'], meta['ARTIST'], meta['ALBUM'], meta['COMMENT'])
-                                data.append({'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['COMMENT'][0], 'url': convertpath(row) })
+                                ndata = {'title': meta['TITLE'][0], 'artist': meta['ARTIST'][0], 'album': meta['ALBUM'][0], 'label': meta['COMMENT'][0], 'url': convertpath(row) }
+                                ndata['length'] = f.length
+                                ndata['bitrate'] = f.bitrate
+                                ndata['sample'] = f.sampleRate
+                                data.append(ndata)
                             except KeyError:
                                 continue
                             except IndexError:

@@ -26,7 +26,7 @@ if __name__ == "__main__":
             except:
                 continue
             try:
-                if row.endswith('flac\n') or row.endsiwth('ogg\n'):
+                if row.endswith('flac\n') or row.endswith('ogg\n'):
                     f = taglib.File(row.strip('\n'))
                     meta = f.tags
                     try:

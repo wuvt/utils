@@ -18,7 +18,7 @@ def convertpath(row):
 
 if __name__ == "__main__":
     modifile = sys.argv[1]
-    data = json.load(modifile)
+    data = json.load(open(modifile))
     for path in ["/tank/automation", "/tank/library"]:
         findrun = subprocess.run(["find", path, "-type", "f", "-newer", modifile], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output = io.BytesIO(findrun.stdout)
